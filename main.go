@@ -9,11 +9,12 @@ import (
 )
 
 func main() {
-	handler.Hello()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "dasei-plugin is running")
 	})
+
+	http.HandleFunc("/webhook", handler.Webhook)
 
 	port := os.Getenv("PORT")
 	if port == "" {
