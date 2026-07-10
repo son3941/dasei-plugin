@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/son3941/dasei-plugin/handler"
 )
@@ -14,6 +15,15 @@ func main() {
 		fmt.Fprintln(w, "dasei-plugin is running")
 	})
 
-	fmt.Println("Server started :8080")
-	http.ListenAndServe(":8080", nil)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Println("Server started :" + port)
+
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		panic(err)
+	}
 }
