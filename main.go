@@ -10,12 +10,15 @@ import (
 
 func main() {
 
+	// トップページ確認用
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "dasei-plugin is running")
 	})
 
-	http.HandleFunc("/webhook", handler.Webhook)
+	// mixi2 Webhook
+	http.HandleFunc("/events", handler.Webhook)
 
+	// RenderのPORT取得
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
