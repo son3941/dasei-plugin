@@ -10,11 +10,24 @@ func Webhook(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("========== WEBHOOK ==========")
 	fmt.Println("Method:", r.Method)
+	fmt.Println("URL:", r.URL.Path)
 
-	body, _ := io.ReadAll(r.Body)
+	fmt.Println("----- Headers -----")
+	for k, v := range r.Header {
+		fmt.Println(k, ":", v)
+	}
 
-	fmt.Println(string(body))
+	fmt.Println("----- Body -----")
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("ReadBody Error:", err)
+	} else {
+		fmt.Println(string(body))
+	}
+
+	fmt.Println("========== END ==========")
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
+	_, _ = w.Write([]byte("OK"))
 }
